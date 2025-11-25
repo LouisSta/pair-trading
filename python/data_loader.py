@@ -6,10 +6,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 DATA_DIR.mkdir(exist_ok=True)
 
 
-def load_data(ticker1: str, ticker2: str,
-              start="2015-01-01", end="2025-01-01",
-              clean=False):
-
+def load(ticker1: str, ticker2: str, start="2015-01-01", end="2025-01-01", clean=False):
     df = yf.download([ticker1, ticker2], start=start, end=end)["Adj Close"]
     df.columns = [ticker1, ticker2]
     if clean:
