@@ -1,11 +1,21 @@
 import yfinance as yf
+from pathlib import Path
 
 
-def load_data(ticker1: str, ticker2: str, start="2015-01-01", end="2025-01-01"):
-    df = yf.download(tickers=[ticker1, ticker2],
-                     start=start,
-                     end=end)["Adj Close"]
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DATA_DIR.mkdir(exist_ok=True)
+
+
+def load_data(ticker1: str, ticker2: str,
+              start="2015-01-01", end="2025-01-01",
+              clean=False):
+
+    df = yf.download([ticker1, ticker2], start=start, end=end)["Adj Close"]
     df.columns = [ticker1, ticker2]
-    df.dropna(inplace=True)
-    df.to_csv(f"../data/{ticker1}&{ticker2}.csv")
+    if clean:
+        df = df.dropna()
+        filename = f"{ticker1}&{ticker2}_clean.csv"
+    else:
+        filename = f"{ticker1}&{ticker2}"
+    df.to_csv(filename)
     return df
