@@ -1,7 +1,7 @@
 import statsmodels.api as sm
 
 
-def compute_spread(df, A, B):
+def compute_spread(df, A: str, B: str):
     # regression (OLS)
     x = sm.add_constant(df[B])
     y = df[A]
