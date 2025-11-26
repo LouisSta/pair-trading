@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 
 
-def load(ticker1: str, ticker2: str, start="2015-01-01", end="2025-01-01",
+def load(ticker1: str, ticker2: str, start="2010-01-01", end="2025-01-01",
          clean=True, data_dir=None):
     if data_dir is None:
         data_dir = Path.cwd() / "data"
@@ -21,7 +21,7 @@ def load(ticker1: str, ticker2: str, start="2015-01-01", end="2025-01-01",
 
 
 def load_prices_and_returns(ticker1: str, ticker2: str,
-                            start="2015-01-01", end="2025-01-01",
+                            start="2010-01-01", end="2025-01-01",
                             data_dir=None):
     if data_dir is None:
         data_dir = Path.cwd() / "data"
