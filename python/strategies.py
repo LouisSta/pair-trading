@@ -41,13 +41,3 @@ def pairs_z_score(df, A: str, B: str, entry: float, tp: float, sl: float, window
 
     df["position"] = pd.Series(positions).shift(1, fill_value=0)  # trade the next day
     return df
-
-
-from python.utils import save_df
-from python.data_loader import load_prices_and_returns
-
-df = load_prices_and_returns("BNP.PA", "GLE.PA")
-
-df = pairs_z_score(df, "BNP.PA", "GLE.PA", entry=1, tp=0.2, sl=3, window=30)
-
-save_df(df)
