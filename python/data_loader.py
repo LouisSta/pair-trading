@@ -17,6 +17,7 @@ def load(ticker1: str, ticker2: str, start="2010-01-01", end="2025-01-01",
     else:
         filename = data_dir / f"{ticker1}&{ticker2}.csv"
     df.to_csv(filename)
+    df = df.reset_index()
     return df
 
 
@@ -34,4 +35,5 @@ def load_prices_and_returns(ticker1: str, ticker2: str,
     filename = data_dir / f"P&R_{ticker1}&{ticker2}.csv"
     df.columns = [ticker1, ticker2, f"{ticker1}_ret", f"{ticker2}_ret"]
     df.to_csv(filename)
+    df = df.reset_index()
     return df

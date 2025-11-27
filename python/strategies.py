@@ -1,11 +1,12 @@
+import pandas as pd
 from python.spread import compute_spread
 
 
-def pairs_z_score(df, A: str, B: str, entry, tp, sl, window=None):
+def pairs_z_score(df, A: str, B: str, entry: float, tp: float, sl: float, window=None):
     """
     tp<entry<sl
     """
-    df["position"] = 0
+    positions = []
     position = 0
 
     for i in range(len(df)):
@@ -22,7 +23,7 @@ def pairs_z_score(df, A: str, B: str, entry, tp, sl, window=None):
         spr_mean = spread_window.mean()
         spr_std = spread_window.std()
         
-        if spr_std == 0:
+        if spr_std == 0 or not isinstance(spr_std, float):
             z = 0
         else:
             z = (spread_window.iloc[-1] - spr_mean) / spr_std
@@ -36,8 +37,17 @@ def pairs_z_score(df, A: str, B: str, entry, tp, sl, window=None):
         elif z < -entry:
             position = 1  # long spread
 
-        df.loc[i, "position"] = position
+        positions.append(position)
 
-    df["position"] = df["position"].shift(1)  # trade the next day
-
+    df["position"] = pd.Series(positions).shift(1, fill_value=0)  # trade the next day
     return df
+
+
+from python.utils import save_df
+from python.data_loader import load_prices_and_returns
+
+df = load_prices_and_returns("BNP.PA", "GLE.PA")
+
+df = pairs_z_score(df, "BNP.PA", "GLE.PA", entry=1, tp=0.2, sl=3, window=30)
+
+save_df(df)
