@@ -2,3 +2,6 @@ pathlib
 yfinance
 pandas
 statsmodels
+seaborn
+plotly
+numpy
