@@ -18,9 +18,8 @@ def max_drawdown(df, col='capital'):
     return dd.min()
 
 
-def sharpe_ratio(df, freq=252):  # 252 days per year
-    ret = df['pnl']
-    return (ret.mean() / ret.std()) * (freq ** 0.5)
+def sharpe_ratio(df, freq=252):  # 252 days per year]
+    return (df['pnl'].mean() / df['pnl'].std()) * (freq ** 0.5)
 
 
 def sortino_ratio(df, freq=252):
