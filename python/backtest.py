@@ -63,6 +63,7 @@ def performance_report(returns, capital, risk_free_rate=0.0, freq=252) ->\
         "Calmar Ratio": calmar_ratio(capital, freq),
         "Volatility (%)": 100 * returns.std() * np.sqrt(freq),
         "Annualized Return (%)": 100 * returns.mean() * freq,
+        "Annualized capital increase"
         "Maximum capital": capital.max(),
         "Minimum capital": capital.min(),
         "Final capital": capital.iloc[-1]
